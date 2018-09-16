@@ -53,6 +53,15 @@ public class AnoSemestre extends Number implements Comparable<Number>{
         return Integer.compare(intAnoSemestre, anoSemestre.intValue());
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof  Number){
+            return compareTo((Number)obj) == 0;
+        }else{
+            return false;
+        }
+    }
+
     public int getSemestre(){
         return intAnoSemestre - ((intAnoSemestre/10)*10);
     }

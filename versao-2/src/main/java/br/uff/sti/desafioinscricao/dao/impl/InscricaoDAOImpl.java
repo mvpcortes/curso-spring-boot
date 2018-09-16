@@ -1,6 +1,6 @@
 package br.uff.sti.desafioinscricao.dao.impl;
 
-import br.uff.sti.desafioinscricao.InscricaoDAO;
+import br.uff.sti.desafioinscricao.dao.InscricaoDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package br.uff.sti.desafioinscricao.dao;
+package br.uff.sti.desafioinscricao;
 
-import br.uff.sti.desafioinscricao.AlunoDAO;
-import br.uff.sti.desafioinscricao.InscricaoDAO;
+import br.uff.sti.desafioinscricao.dao.AlunoDAO;
+import br.uff.sti.desafioinscricao.dao.InscricaoDAO;
 import br.uff.sti.desafioinscricao.model.AnoSemestre;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +15,11 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+//@Disabled
+@DisplayName("Horda-02 fazendo as regras de obter carga horária de um aluno em um ano-semestre.")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class AlunoDAOImplTest {
+public class Horda02Test {
 
     @Autowired
     private AlunoDAO alunoDAO;
@@ -96,7 +98,7 @@ class AlunoDAOImplTest {
              */
             @BeforeEach
             public void init(){
-                  inscricaoDAO.inscrever(MATRICULA, TURMA_ID);
+                inscricaoDAO.inscrever(MATRICULA, TURMA_ID);
             }
 
             @AfterEach

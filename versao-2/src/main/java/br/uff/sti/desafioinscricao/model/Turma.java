@@ -32,7 +32,11 @@ public class Turma {
         return codigoDisciplina;
     }
 
-    public int getAnoSemestre() {
-        return anoSemestre;
+    public AnoSemestre getAnoSemestre() {
+        return new AnoSemestre(anoSemestre);
+    }
+
+    public int getCargaHoraria() {
+        return cargaHoraria;
     }
 }
