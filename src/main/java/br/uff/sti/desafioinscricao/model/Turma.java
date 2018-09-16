@@ -12,6 +12,10 @@ public class Turma {
 
     private int cargaHoraria;
 
+    public Turma(){
+
+    }
+
     public Turma(Long id, String codigoTurma, String codigoDisciplina, int anoSemestre, int cargaHoraria) {
         this.id = id;
         this.codigoTurma = codigoTurma;

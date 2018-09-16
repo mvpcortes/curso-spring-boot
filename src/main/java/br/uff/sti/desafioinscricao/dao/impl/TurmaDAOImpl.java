@@ -7,6 +7,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,16 @@ public class TurmaDAOImpl implements TurmaDAO {
 
     public TurmaDAOImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private static Turma resultSetParaTurma(ResultSet rs, int rowNum) throws SQLException {
+        return new Turma(
+                rs.getLong(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getInt(4),
+                rs.getInt(5)
+        );
     }
 
     /**
@@ -39,13 +51,7 @@ public class TurmaDAOImpl implements TurmaDAO {
                         matricula,
                         anoSemestre.intValue()
                 },
-                (rs, rowNum) -> new Turma(
-                        rs.getLong(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getInt(4),
-                        rs.getInt(5)
-                )
+                (rs, rowNum) -> resultSetParaTurma(rs, 0)
         );
     }
 
@@ -55,15 +61,27 @@ public class TurmaDAOImpl implements TurmaDAO {
             return Optional.of(jdbcTemplate.queryForObject("SELECT id, codigo_turma, codigo_disciplina, ano_semestre, carga_horaria FROM turma " +
                             " WHERE id = ?",
                     new Object[]{idTurma},
-                    (rs, rowNum) -> new Turma(
-                            rs.getLong(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            rs.getInt(5)
-                    )));
+                    TurmaDAOImpl::resultSetParaTurma));
         }catch(EmptyResultDataAccessException e){
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Turma> findTurmas() {
+        return jdbcTemplate.query("SELECT id, codigo_turma, codigo_disciplina, ano_semestre, carga_horaria " +
+                        "FROM turma ",
+                (rs, rowNum) -> resultSetParaTurma(rs, 0));
+
+    }
+
+    @Override
+    public List<Turma> findTurmasAtuais() {
+            return jdbcTemplate.query("SELECT id, codigo_turma, codigo_disciplina, ano_semestre, carga_horaria " +
+                            "FROM turma " +
+                            " WHERE ano_semestre = ?",
+                    new Object[]{20182},
+                    (rs, rowNum) -> resultSetParaTurma(rs, 0));
+
     }
 }

@@ -11,4 +11,8 @@ public interface TurmaDAO {
     List<Turma> findTurmasInscritas(String matricula, AnoSemestre anoSemestre);
 
     Optional<Turma> findTurma(long idTurma);
+
+    List<Turma> findTurmas();
+
+    List<Turma>  findTurmasAtuais();
 }
