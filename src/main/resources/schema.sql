@@ -1,3 +1,7 @@
+DROP TABLE  IF EXISTS valor_banco;
+DROP TABLE  IF EXISTS aluno;
+DROP TABLE  IF EXISTS turma;
+DROP TABLE  IF EXISTS inscricao;
 
 CREATE TABLE valor_banco(
     nome VARCHAR(255)   NOT NULL,

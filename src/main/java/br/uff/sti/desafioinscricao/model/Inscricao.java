@@ -6,8 +6,19 @@ public class Inscricao {
 
     private Long idTurma;
 
+    public Inscricao() {
+    }
+
     public Inscricao(String matriculaAluno, Long idTurma) {
         this.matriculaAluno = matriculaAluno;
         this.idTurma = idTurma;
+    }
+
+    public String getMatriculaAluno() {
+        return matriculaAluno;
+    }
+
+    public Long getIdTurma() {
+        return idTurma;
     }
 }

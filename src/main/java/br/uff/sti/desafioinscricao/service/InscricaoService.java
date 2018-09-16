@@ -59,6 +59,10 @@ public class InscricaoService {
             throw new IllegalArgumentException(String.format("O aluno '%s' não existe", matricula));
         }
 
+        if(inscricaoDAO.estaInscrito(matricula, idTurma)){
+            throw new IllegalArgumentException(String.format("O aluno '%s' já inscrito na turma %d", matricula, idTurma));
+        }
+
         final long qtdPrevista = qtdAtual + turma.getCargaHoraria();
 
         if(qtdPrevista > MAX_CARGA_HORARIA){

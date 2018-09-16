@@ -4,6 +4,8 @@ import br.uff.sti.desafioinscricao.dao.InscricaoDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class InscricaoDAOImpl implements InscricaoDAO {
 
@@ -21,5 +23,14 @@ public class InscricaoDAOImpl implements InscricaoDAO {
     @Override
     public void desinscrever(String matricula, long idTurma) {
         jdbcTemplate.update("DELETE FROM inscricao WHERE matricula_aluno = ? AND ID_TURMA = ?", matricula, idTurma);
+    }
+
+    @Override
+    public boolean estaInscrito(String matricula, long idTurma) {
+        return Optional.of(jdbcTemplate.queryForObject(
+                "SELECT count(*) FROM inscricao WHERE matricula_aluno = ? AND id_turma = ?",
+                new Object[]{matricula, idTurma},
+                Long.class
+        )).orElse(0L) > 0;
     }
 }

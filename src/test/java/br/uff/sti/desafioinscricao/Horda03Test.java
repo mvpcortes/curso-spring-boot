@@ -119,11 +119,13 @@ public class Horda03Test {
 
         @Nested
         public class E_inscricao_na_turma_B {
+
             @BeforeEach
             public void init(){
                 //realiza a inscrição
                 inscricaoService.inscreveAluno(MATRICULA, ID_TURMA_B);
             }
+
             @Test
             public void quando_aluno_possui_uma_turma_entao_pode_inscrever_mais_uma () {
 
@@ -132,6 +134,15 @@ public class Horda03Test {
                 assertEquals(2, list.size());
                 assertTrue(list.contains(ID_TURMA_A));
                 assertTrue(list.contains(ID_TURMA_B));
+            }
+
+            @Test
+            public void quando_tenta_inscrever_em_turma_ja_inscrita_entao_gera_excecao(){
+                final String message = assertThrows(IllegalArgumentException.class, ()->
+                        inscricaoService.inscreveAluno(MATRICULA, ID_TURMA_B))
+                        .getLocalizedMessage();
+
+                assertEquals(String.format("O aluno '%s' já inscrito na turma %d", MATRICULA, ID_TURMA_B), message);
             }
 
             @Nested

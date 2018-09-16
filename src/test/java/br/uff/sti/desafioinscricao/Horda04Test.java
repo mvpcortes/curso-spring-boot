@@ -1,6 +1,8 @@
 package br.uff.sti.desafioinscricao;
 
+import br.uff.sti.desafioinscricao.dao.InscricaoDAO;
 import br.uff.sti.desafioinscricao.model.Turma;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,11 +10,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,11 +28,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class Horda04Test {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private InscricaoDAO inscricaoDAO;
 
     /**
      * Despois destes testes passando você pode iniciar a aplicação com o comando ./mvnw spring-boot:run e acessar a url
@@ -38,29 +42,29 @@ public class Horda04Test {
      */
     @Nested
     @DisplayName("Verificando comportamento de TurmaApi")
-    class TurmaApiTest{
+    class TurmaApiTest {
 
         @Test
-        public void quando_pede_para_a_api_todas_as_turmas_entao_retorna_todas_elas(){
+        public void quando_pede_para_a_api_todas_as_turmas_entao_retorna_todas_elas() {
 
             Turma[] turmas = restTemplate.getForObject("/api/turma", Turma[].class);
 
-            List<Turma> lisTurmas= Stream.of(turmas).sorted(Comparator.comparing(Turma::getId)).collect(Collectors.toList());
+            List<Turma> lisTurmas = Stream.of(turmas).sorted(Comparator.comparing(Turma::getId)).collect(Collectors.toList());
 
             assertEquals(24, lisTurmas.size());
 
-            assertTurma(lisTurmas.get( 0),  1L, "C1", "COM0001", 20172, 20);
-            assertTurma(lisTurmas.get( 1),  2L, "C2", "COM0001", 20172, 20);
-            assertTurma(lisTurmas.get( 2),  3L, "C1", "COM0002", 20172, 40);
-            assertTurma(lisTurmas.get( 3),  4L, "C1", "COM0003", 20172, 30);
+            assertTurma(lisTurmas.get(0), 1L, "C1", "COM0001", 20172, 20);
+            assertTurma(lisTurmas.get(1), 2L, "C2", "COM0001", 20172, 20);
+            assertTurma(lisTurmas.get(2), 3L, "C1", "COM0002", 20172, 40);
+            assertTurma(lisTurmas.get(3), 4L, "C1", "COM0003", 20172, 30);
 
-            assertTurma(lisTurmas.get( 4),  5L, "M1", "MAT0001", 20172, 60);
-            assertTurma(lisTurmas.get( 5),  6L, "M2", "MAT0001", 20172, 60);
-            assertTurma(lisTurmas.get( 6),  7L, "M1", "MAT0002", 20172, 90);
-            assertTurma(lisTurmas.get( 7),  8L, "M1", "MAT0003", 20172, 30);
+            assertTurma(lisTurmas.get(4), 5L, "M1", "MAT0001", 20172, 60);
+            assertTurma(lisTurmas.get(5), 6L, "M2", "MAT0001", 20172, 60);
+            assertTurma(lisTurmas.get(6), 7L, "M1", "MAT0002", 20172, 90);
+            assertTurma(lisTurmas.get(7), 8L, "M1", "MAT0003", 20172, 30);
 
-            assertTurma(lisTurmas.get( 8),  9L, "C1", "COM0001", 20181, 20);
-            assertTurma(lisTurmas.get( 9), 10L, "C2", "COM0001", 20181, 20);
+            assertTurma(lisTurmas.get(8), 9L, "C1", "COM0001", 20181, 20);
+            assertTurma(lisTurmas.get(9), 10L, "C2", "COM0001", 20181, 20);
             assertTurma(lisTurmas.get(10), 11L, "C1", "COM0002", 20181, 40);
             assertTurma(lisTurmas.get(11), 12L, "C1", "COM0003", 20181, 30);
 
@@ -81,11 +85,11 @@ public class Horda04Test {
         }
 
         @Test
-        public void quando_pede_para_a_api_so_turmas_atuais_entao_retorna_so_turmas_de_20182(){
+        public void quando_pede_para_a_api_so_turmas_atuais_entao_retorna_so_turmas_de_20182() {
 
             Turma[] turmas = restTemplate.getForObject("/api/turma?atual=true", Turma[].class);
 
-            List<Turma> lisTurmas= Stream.of(turmas).sorted(Comparator.comparing(Turma::getId)).collect(Collectors.toList());
+            List<Turma> lisTurmas = Stream.of(turmas).sorted(Comparator.comparing(Turma::getId)).collect(Collectors.toList());
 
             assertEquals(8, lisTurmas.size());
 
@@ -107,6 +111,60 @@ public class Horda04Test {
             assertEquals(intAnoSemestre, turma.getAnoSemestre().intValue());
             assertEquals(intCargaHoraria, turma.getCargaHoraria());
         }
+    }
 
+    @Nested
+    @DisplayName("Verificando comportamento de InscricaoApi")
+    class InscricaoApiTest{
+
+        final String MATRICULA = "1111";
+        final long ID_TURMA_A  = 21;
+
+
+        @AfterEach
+        public void destroy(){
+            //remove as alterações que podem ter ocorrido
+            inscricaoDAO.desinscrever(MATRICULA, ID_TURMA_A);
+        }
+
+        class PostValores{
+            public String matriculaAluno;
+            public Long idTurma;
+
+            public PostValores(String matriculaAluno, Long idTurma) {
+                this.matriculaAluno = matriculaAluno;
+                this.idTurma = idTurma;
+            }
+        }
+
+        @Test
+        public void quando_tenta_inscrever_aluno_entao_retorna_http_ok(){
+
+            //realiza a operação
+            ResponseEntity<Void> responseEntity = restTemplate.postForEntity("/api/inscricao",
+                    new PostValores(MATRICULA, ID_TURMA_A),
+                    Void.class);
+
+            //verifica o resultado
+            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        }
+
+        /**
+         * Note que deixamos esta solução. Mas o ideal seria converter para BAD_REQUEST. Existem formas para fazer isto.
+         * Uma delas é usar @ExceptionHandler.
+         * Outra, mais simples, é pegar a exceção e retornar um ResponseEntity.
+         */
+        @Test
+        public void quando_tenta_inscrever_aluno_em_turma_inexistente_entao_retorna_http_bad_request(){
+
+            //realiza a operação
+            ResponseEntity<Map> responseEntity = restTemplate.postForEntity("/api/inscricao",
+                    new PostValores(MATRICULA, -10L),
+                    Map.class);
+
+            //verifica o resultado
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+            assertEquals("A turma -10 não existe", responseEntity.getBody().get("message"));
+        }
     }
 }

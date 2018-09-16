@@ -6,4 +6,5 @@ public interface InscricaoDAO {
 
     void desinscrever(String matricula, long idTurma);
 
+    boolean estaInscrito(String matricula, long idTurma);
 }
