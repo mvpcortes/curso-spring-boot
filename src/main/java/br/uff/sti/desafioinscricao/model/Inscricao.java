@@ -14,6 +14,14 @@ public class Inscricao {
         this.idTurma = idTurma;
     }
 
+    public void setMatriculaAluno(String matriculaAluno) {
+        this.matriculaAluno = matriculaAluno;
+    }
+
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
+    }
+
     public String getMatriculaAluno() {
         return matriculaAluno;
     }

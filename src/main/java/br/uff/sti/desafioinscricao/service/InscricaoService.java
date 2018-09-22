@@ -77,4 +77,8 @@ public class InscricaoService {
 
         inscricaoDAO.inscrever(matricula, idTurma);
     }
+
+    public AnoSemestre getAnoSemestreAtual(){
+        return ANO_SEMESTRE_ATUAL;
+    }
 }

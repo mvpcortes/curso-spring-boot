@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Turmas</title>
+</head>
+<body>
+<h1 id="titulo_ano_semestre"> Turmas de <span th:text="${anoSemestre}">XXXX.X</span></h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Código Turma</th>
+        <th>Código Disciplina</th>
+        <th>Carga Horária (Horas)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="row_turma" th:each="turma: ${turmas}">
+        <td class="id_turma" th:text="${turma.id}">XX</td>
+        <td class="codigo_turma" th:text="${turma.codigoTurma}">A1</td>
+        <td class="codigo_disciplina" th:text="${turma.codigoDisciplina}">COM00001</td>
+        <td class="carga_horaria" th:text="${turma.cargaHoraria}">60</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

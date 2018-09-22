@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Turmas</title>
+</head>
+<body>
+<h1>Inscricao em turmas</h1>
+<h2 th:if="${erro}" id="erro" th:text="${erro}"></h2>
+<form th:action="@{/inscricao}" method="post">
+    <p>
+        <label for="input_matricula">Matricula:</label>
+        <input id="input_matricula" name="matriculaAluno">
+    </p>
+    <p>
+        <label for="input_turmas">Turmas</label>
+        <select id="input_turmas" name="idTurma">
+            <option th:each="turma : ${turmas}" th:value="${turma.id}" th:text="${turma.toString()}">
+                Opcao 1
+            </option>
+        </select>
+    </p>
+    <p>
+        <input id="submit_form" type="submit" value="enviar">
+    </p>
+</form>
+</body>
+</html>

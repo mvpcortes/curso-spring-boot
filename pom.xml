@@ -8,8 +8,8 @@
 	<version>0.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>desafio-inscricao</name>
-	<description>Treinamento java/spring-boot para cadastro de inscrição de aluno em turma.</description>
+	<name>Introdução ao spring-boot orientado a teste</name>
+	<description>curso de java/spring-boot para cadastro de inscrição de aluno em turma. O curso será orientado a testes. Isto é, serão definidas uma série de baterias de testes que estão falhando. O treinamento foca na implementação de código que atenda os testes.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -61,12 +61,26 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>selenium-jupiter</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit-driver</artifactId>
+            <version>2.29.3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

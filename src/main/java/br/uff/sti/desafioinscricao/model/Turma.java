@@ -43,4 +43,9 @@ public class Turma {
     public int getCargaHoraria() {
         return cargaHoraria;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s(%s)", codigoDisciplina, codigoTurma);
+    }
 }
