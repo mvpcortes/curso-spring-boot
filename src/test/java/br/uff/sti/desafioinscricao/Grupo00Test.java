@@ -11,8 +11,8 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 //@Disabled
-@DisplayName("Horda-Tutorial de testes, com explicações básicas de java e testes unitários")
-public class Horda00Test {
+@DisplayName("Grupo-Tutorial de testes, com explicações básicas de java e testes unitários")
+public class Grupo00Test {
 
     @Nested
     public class AprendendoTestesUnitariosTest {
@@ -61,12 +61,12 @@ public class Horda00Test {
 
 
             //faz dependências dublês (doubles) para simular valores do banco
-            ValorBancoDAO valorBancoRepository = mock(ValorBancoDAO.class);
-            doReturn(valorBancoA).when(valorBancoRepository).getValorA();
-            doReturn(valorBancoB).when(valorBancoRepository).getValorB();
+            ValorBancoDAO valorBancoDAO = mock(ValorBancoDAO.class);
+            doReturn(valorBancoA).when(valorBancoDAO).getValorA();
+            doReturn(valorBancoB).when(valorBancoDAO).getValorB();
 
             //realiza a associação do objeto em teste com o stub
-            ValorBancoService valorBancoService = new ValorBancoService(valorBancoRepository);
+            ValorBancoService valorBancoService = new ValorBancoService(valorBancoDAO);
 
 
             //realiza teste chamando método do br.uff.sti.desafioinscricao.service

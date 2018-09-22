@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValorBancoService {
 
-    private ValorBancoDAO valorBancoRepository;
+    private ValorBancoDAO valorBancoDAO;
 
-    public ValorBancoService(ValorBancoDAO valorBancoRepository) {
-        this.valorBancoRepository = valorBancoRepository;
+    public ValorBancoService(ValorBancoDAO valorBancoDAO) {
+        this.valorBancoDAO = valorBancoDAO;
     }
 
     public int somaValores(){
-        return valorBancoRepository.getValorA().getValor() + valorBancoRepository.getValorB().getValor();
+        return valorBancoDAO.getValorA().getValor() + valorBancoDAO.getValorB().getValor();
     }
 }
