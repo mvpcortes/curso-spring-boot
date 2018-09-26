@@ -22,7 +22,8 @@ public class AlunoDAOImpl implements AlunoDAO {
                 " SELECT SUM(t.carga_horaria) FROM inscricao insc "
                 + "  INNER JOIN turma t on t.id = insc.id_turma "
                 + " WHERE t.ano_semestre = ? AND insc.matricula_aluno = ?",
-                Long.class, anoSemestre.intValue(), matricula)).orElse(0L);
+                Long.class, anoSemestre.intValue(), matricula))
+                .orElse(0L);
     }
 
     /**

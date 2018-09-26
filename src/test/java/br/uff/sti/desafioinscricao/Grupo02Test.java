@@ -16,10 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 //@Disabled
-@DisplayName("Horda-02 fazendo as regras de obter carga horária de um aluno em um ano-semestre.")
+@DisplayName("Grupo-02 fazendo as regras de obter carga horária de um aluno em um ano-semestre.")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class Horda02Test {
+public class Grupo02Test {
 
     @Autowired
     private AlunoDAO alunoDAO;

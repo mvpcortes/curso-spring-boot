@@ -3,17 +3,15 @@ package br.uff.sti.desafioinscricao;
 import br.uff.sti.desafioinscricao.model.Aluno;
 import br.uff.sti.desafioinscricao.model.AnoSemestre;
 import br.uff.sti.desafioinscricao.model.Turma;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 //@Disabled
-@DisplayName("Horda-01 explicando como fazer testes unitários")
-public class Horda01Test {
+@DisplayName("Grupo-01 explicando como fazer testes unitários")
+public class Grupo01Test {
 
     @DisplayName("Testes de aluno")
     @Nested
@@ -34,12 +32,29 @@ public class Horda01Test {
     class AnoSemestreTest {
 
         @Test
-        public void quando_constroi_um_anosemestre_com_ano_semestre_valido_entao_ok(){
+        public void quando_constroi_um_anosemestre_com_ano_semestre_valido_entao_obtem_ano_valido(){
 
             AnoSemestre anoSemestre = new AnoSemestre(20101);
 
-            assertEquals(20101, anoSemestre.intValue());
+            assertEquals(2010, anoSemestre.getAno());
         }
+
+        @Test
+        public void quando_constroi_um_anosemestre_com_ano_semestre_valido_entao_obtem_primeiro_semestre_valido(){
+
+            AnoSemestre anoSemestre = new AnoSemestre(20101);
+
+            assertEquals(1, anoSemestre.getSemestre());
+        }
+
+        @Test
+        public void quando_constroi_um_anosemestre_com_ano_semestre_valido_entao_obtem_segundo_semestre_valido(){
+
+            AnoSemestre anoSemestre = new AnoSemestre(20102);
+
+            assertEquals(2, anoSemestre.getSemestre());
+        }
+
 
         @Test
         public void quando_obtem_o_valor_int_do_anosemestre_entao_ok(){
@@ -54,7 +69,7 @@ public class Horda01Test {
 
             AnoSemestre anoSemestre = new AnoSemestre(20121);
 
-            assertEquals(20121L, anoSemestre.intValue());
+            assertEquals(20121L, anoSemestre.longValue());
         }
 
         @Test
@@ -62,7 +77,7 @@ public class Horda01Test {
 
             AnoSemestre anoSemestre = new AnoSemestre(20121);
 
-            assertEquals(20121.0, anoSemestre.intValue());
+            assertEquals(20121.0, anoSemestre.doubleValue());
         }
 
         @Test
@@ -70,48 +85,105 @@ public class Horda01Test {
 
             AnoSemestre anoSemestre = new AnoSemestre(20121);
 
-            assertEquals(20121.0F, anoSemestre.intValue());
+            assertEquals(20121.0F, anoSemestre.floatValue());
         }
 
-        /**
-         * Anos semestres diferentes de 1 e 2 devem gerar IllegalStateException
-         */
-        @Test()
-        public void quando_cria_ano_semestre_ano_semestre_invalido_entao_gera_falha(){
-            assertThrows(IllegalArgumentException.class,
-                    ()->{
-                        new AnoSemestre(20105);
-                    });
+
+        @DisplayName("Dados semestres inválidos")
+        @Nested
+        class SemestresInvalidos {
+            /**
+             * Anos semestres diferentes de 1 e 2 devem gerar IllegalStateException
+             */
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_3_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20103);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_4_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20104);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_5_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20105);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_6_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20106);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_7_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20107);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_8_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20108);
+                        });
+            }
+
+            @Test()
+            public void quando_cria_ano_semestre_ano_semestre_invalido_9_entao_gera_falha() {
+                assertThrows(IllegalArgumentException.class,
+                        () -> {
+                            new AnoSemestre(20109);
+                        });
+            }
         }
 
-        @Test
-        public void quando_compara_ano_semestre_com_um_ano_mais_novo_entao_retorna_menor_negativo(){
-            final int intAnoSemestreA = 20101;
-            final int intAnoSemestreB = 20102;
+        @Nested
+        class VerificandoComparacaoDeAnoSemestre {
 
-            final int valorComparacao = new AnoSemestre(intAnoSemestreA).compareTo(intAnoSemestreB);
+            @Test
+            public void quando_compara_ano_semestre_com_um_ano_mais_novo_entao_retorna_menor_negativo() {
+                final AnoSemestre anoSemestreA =  new AnoSemestre(20101);
+                final AnoSemestre anoSemestreB =  new AnoSemestre(20102);
 
-            assertTrue(valorComparacao < 0);
-        }
+                final int valorComparacao =anoSemestreA.compareTo(anoSemestreB);
 
-        @Test
-        public void quando_compara_ano_semestre_com_um_ano_mais_velho_entao_retorna_maior_positivo(){
-            final int intAnoSemestreA = 20151;
-            final int intAnoSemestreB = 20102;
+                assertTrue(valorComparacao < 0);
+            }
 
-            final int valorComparacao = new AnoSemestre(intAnoSemestreA).compareTo(intAnoSemestreB);
+            @Test
+            public void quando_compara_ano_semestre_com_um_ano_mais_velho_entao_retorna_maior_positivo() {
+                final AnoSemestre anoSemestreA = new AnoSemestre(20151);
+                final AnoSemestre anoSemestreB = new AnoSemestre(20102);
 
-            assertTrue(valorComparacao > 0);
-        }
+                final int valorComparacao =anoSemestreA.compareTo(anoSemestreB);
 
-        @Test
-        public void quando_compara_ano_semestre_com_um_ano_igual_entao_retorna_zeo(){
-            final int intAnoSemestreA = 20301;
-            final int intAnoSemestreB = 20301;
+                assertTrue(valorComparacao > 0);
+            }
 
-            final int valorComparacao = new AnoSemestre(intAnoSemestreA).compareTo(intAnoSemestreB);
+            @Test
+            public void quando_compara_ano_semestre_com_um_ano_igual_entao_retorna_zeo() {
+                final AnoSemestre anoSemestreA = new AnoSemestre(20301);
+                final AnoSemestre anoSemestreB = new AnoSemestre(20301);
 
-            assertEquals(0, valorComparacao);
+                final int valorComparacao =anoSemestreA.compareTo(anoSemestreB);
+
+                assertEquals(0, valorComparacao);
+            }
         }
 
         @Nested
@@ -207,11 +279,6 @@ public class Horda01Test {
         class AnoSemestre20182{
 
             private Turma turma = new Turma(10L, "A1", "COM00001", 20182, 20);
-
-            @Test
-            public void entao_existe_metodo_getAnoSemestre_que_retorna_objeto_AnoSemestre(){
-                assertTrue(turma.getAnoSemestre() instanceof AnoSemestre);
-            }
 
             @Test
             public void entao_existe_metodo_getAnoSemestre_que_retorna_AnoSemestre_igual_a_20182(){
