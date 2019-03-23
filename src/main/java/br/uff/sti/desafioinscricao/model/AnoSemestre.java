@@ -1,6 +1,5 @@
 package br.uff.sti.desafioinscricao.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -8,14 +7,12 @@ import java.util.Set;
  */
 public class AnoSemestre extends Number implements Comparable<Number>{
 
-    private int intAnoSemestre;
+    private final int intAnoSemestre;
 
-    private static Set<Integer> setSemestresValidos = new HashSet<>();
-    static {
-        setSemestresValidos.add(1);
-        setSemestresValidos.add(2);
-    }
+    private static final Set<Integer> setSemestresValidos = Set.of(1, 2);
+
     public AnoSemestre(int anoSemestre) {
+
         this.intAnoSemestre = anoSemestre;
 
         if(!setSemestresValidos.contains(getSemestre())){
@@ -55,7 +52,7 @@ public class AnoSemestre extends Number implements Comparable<Number>{
 
     @Override
     public boolean equals(Object obj){
-        if(obj instanceof  Number){
+        if(obj instanceof Number){
             return compareTo((Number)obj) == 0;
         }else{
             return false;

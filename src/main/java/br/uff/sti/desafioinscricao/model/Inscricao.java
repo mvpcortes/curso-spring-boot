@@ -9,11 +9,6 @@ public class Inscricao {
     public Inscricao() {
     }
 
-    public Inscricao(String matriculaAluno, Long idTurma) {
-        this.matriculaAluno = matriculaAluno;
-        this.idTurma = idTurma;
-    }
-
     public void setMatriculaAluno(String matriculaAluno) {
         this.matriculaAluno = matriculaAluno;
     }

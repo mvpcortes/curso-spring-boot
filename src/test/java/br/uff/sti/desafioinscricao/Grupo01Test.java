@@ -55,6 +55,61 @@ public class Grupo01Test {
             assertEquals(2, anoSemestre.getSemestre());
         }
 
+        @Test
+        public void quando_compara_com_int_e_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20201);
+
+            assertTrue(anoSemestre.equals(20201));
+        }
+
+        @Test
+        public void quando_compara_com_int_e_nao_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20001);
+
+            assertFalse(anoSemestre.equals(20201));
+        }
+
+        @Test
+        public void quando_compara_com_long_e_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20201);
+
+            assertTrue(anoSemestre.equals(20201L));
+        }
+
+        @Test
+        public void quando_compara_com_long_e_nao_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20001);
+
+            assertFalse(anoSemestre.equals(20201L));
+        }
+
+        @Test
+        public void quando_compara_com_float_e_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20201);
+
+            assertTrue(anoSemestre.equals(20201F));
+        }
+
+        @Test
+        public void quando_compara_com_float_e_nao_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20001);
+
+            assertFalse(anoSemestre.equals(20201F));
+        }
+
+        @Test
+        public void quando_compara_com_outro_ano_semestre_e_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20201);
+
+            assertTrue(anoSemestre.equals(new AnoSemestre(20201)));
+        }
+
+        @Test
+        public void quando_compara_com_outro_ano_semestre_e_nao_eh_igual_entao_ok(){
+            AnoSemestre anoSemestre = new AnoSemestre(20001);
+
+            assertFalse(anoSemestre.equals(new AnoSemestre(20201)));
+        }
 
         @Test
         public void quando_obtem_o_valor_int_do_anosemestre_entao_ok(){
@@ -254,6 +309,7 @@ public class Grupo01Test {
             final AnoSemestre anoSemestre = new AnoSemestre(20201);
 
             AnoSemestre anoSemestreDecrementado = anoSemestre.decSemestre();
+
             @Test
             public void entao_os_objetos_sao_diferentes(){
 
@@ -267,6 +323,11 @@ public class Grupo01Test {
                 assertEquals(20192, anoSemestreDecrementado.intValue());
             }
 
+        }
+
+        @Test
+        public void quando_ano_semestre_eh_20181_entao_string_eh_20181(){
+            assertEquals(new AnoSemestre(20181).toString(), "20181");
         }
     }
 
