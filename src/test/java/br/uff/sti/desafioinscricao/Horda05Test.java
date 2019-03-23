@@ -2,7 +2,7 @@ package br.uff.sti.desafioinscricao;
 
 import br.uff.sti.desafioinscricao.dao.InscricaoDAO;
 import br.uff.sti.desafioinscricao.model.Turma;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,9 +35,7 @@ public class Horda05Test {
     @Autowired
     private InscricaoDAO inscricaoDAO;
 
-    HtmlUnitDriver get(HtmlUnitDriver webDriver, String path) {
-        webDriver.setJavascriptEnabled(true);
-        webDriver.setDownloadImages(true);
+    ChromeDriver get(ChromeDriver webDriver, String path) {
         //resize window to mobile form (mobile-first
         webDriver.manage().window().setSize(new Dimension(360, 640));
         webDriver.get("http://localhost:" + port + "/" + path);
@@ -63,7 +61,7 @@ public class Horda05Test {
     public class VerificaTelaDeTurma {
 
         @Test
-        public void quando_acessa_tela_de_turmas_atuais_entao_atribui_texto_com_ano_semeswtre(HtmlUnitDriver webDriver) {
+        public void quando_acessa_tela_de_turmas_atuais_entao_atribui_texto_com_ano_semeswtre(ChromeDriver webDriver) {
             get(webDriver, "turma");
 
             WebElement webElement = webDriver.findElementById("titulo_ano_semestre");
@@ -73,7 +71,7 @@ public class Horda05Test {
         }
 
         @Test
-        public void quando_acessa_tela_de_turmas_atuais_entao_gera_tabela(HtmlUnitDriver webDriver) {
+        public void quando_acessa_tela_de_turmas_atuais_entao_gera_tabela(ChromeDriver webDriver) {
             get(webDriver, "turma");
 
             final List<WebElement> lisTurmas = webDriver.findElementsByClassName("row_turma");
@@ -114,7 +112,7 @@ public class Horda05Test {
         }
 
         @Test
-        public void quando_inscreve_aluno_em_turma_entao_mostra_sucesso(HtmlUnitDriver webDriver){
+        public void quando_inscreve_aluno_em_turma_entao_mostra_sucesso(ChromeDriver webDriver){
             get(webDriver, "inscricao");
 
             //preenche campos
@@ -132,7 +130,7 @@ public class Horda05Test {
         }
 
         @Test
-        public void quando_inscreve_aluno_inexistente_em_turma_entao_falha(HtmlUnitDriver webDriver){
+        public void quando_inscreve_aluno_inexistente_em_turma_entao_falha(ChromeDriver webDriver){
             get(webDriver, "inscricao");
 
             //preenche campos
